@@ -1,18 +1,14 @@
-function maximalSquare(matrix) {
-  if (matrix.length === 0 || matrix[0].length === 0) return 0;
-  const rows = matrix.length;
-  const cols = matrix[0].length;
-  const dp = Array.from({ length: rows + 1 }, () =>
-    Array.from({ length: cols + 1 }, () => 0),
-  );
-  let maxSquare = 0;
-  for (let i = 1; i <= rows; i++) {
-    for (let j = 1; j <= cols; j++) {
-      if (matrix[i - 1][j - 1] === "1") {
-        dp[i][j] = Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + 1;
-        maxSquare = Math.max(maxSquare, dp[i][j]);
+function lengthOfLIS(nums) {
+  if (nums.length === 0) return 0;
+  const dp = new Array(nums.length).fill(1);
+  let max = 1;
+  for (let i = 1; i < nums.length; i++) {
+    for (let j = 0; j < i; j++) {
+      if (nums[i] > nums[j]) {
+        dp[i] = Math.max(dp[i], dp[j] + 1);
+        max = Math.max(max, dp[i]);
       }
     }
   }
-  return maxSquare * maxSquare;
+  return max;
 }
