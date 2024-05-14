@@ -1,15 +1,15 @@
-function uniquePaths(m, n) {
-  const dp = new Array(m).fill(0).map(() => new Array(n).fill(0));
-  for (let i = 0; i < m; i++) {
-    dp[i][0] = 1;
-  }
-  for (let j = 0; j < n; j++) {
-    dp[0][j] = 1;
-  }
-  for (let i = 1; i < m; i++) {
-    for (let j = 1; j < n; j++) {
-      dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+function merge(intervals) {
+  intervals.sort((a, b) => a[0] - b[0]);
+  const merged = [];
+  for (const interval of intervals) {
+    if (!merged.length || merged[merged.length - 1][1] < interval[0]) {
+      merged.push(interval);
+    } else {
+      merged[merged.length - 1][1] = Math.max(
+        merged[merged.length - 1][1],
+        interval[1],
+      );
     }
   }
-  return dp[m - 1][n - 1];
+  return merged;
 }
